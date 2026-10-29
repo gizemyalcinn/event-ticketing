@@ -10,6 +10,15 @@ services:
       POSTGRES_DB: ${DB_NAME}
     volumes:
       - pgdata:/var/lib/postgresql/data
-
+  app:
+    build: .
+    container_name: event_ticketing_app
+    volumes:
+      - .:/var/www/html
+    depends_on:
+      - db
+    ports:
+      - "8000:8000"
+    command: tail -f /dev/null
 volumes:
   pgdata:
